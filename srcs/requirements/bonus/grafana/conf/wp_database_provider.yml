@@ -1,0 +1,16 @@
+apiVersion: 1
+
+datasources:
+  - name: wp_database
+    type: mysql
+    url: mariadb:3306
+    user: MYSQL_USERNAME
+    uid: P9F862C854F32476B
+    jsonData:
+      database: MYSQL_WORDPRESS_DATABASE
+      maxOpenConns: 100
+      maxIdleConns: 100
+      maxIdleConnsAuto: true
+      connMaxLifetime: 14400
+    secureJsonData:
+      password: MYSQL_PASSWORD

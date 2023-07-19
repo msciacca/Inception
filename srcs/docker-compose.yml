@@ -1,0 +1,75 @@
+networks:
+  inception:
+
+volumes:
+  wordpress_data:
+  mariadb_data:
+
+services:
+  mariadb:
+    image: "i-mariadb:1.0.0"
+    build: ./requirements/mariadb
+    volumes:
+      - mariadb_data:/data/
+    env_file:
+      - .env
+    networks:
+      - inception
+  wordpress:
+    image: "i-wordpress:1.0.0"
+    build: ./requirements/wordpress
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html/
+    networks:
+      - inception
+  nginx:
+    image: "i-nginx:1.0.0"
+    build: ./requirements/nginx
+    ports:
+     - "443:443"
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html/
+    networks:
+      - inception
+  adminer:
+    image: "i-adminer:1.0.0"
+    build: ./requirements/bonus/adminer
+    env_file:
+      - .env
+    networks:
+      - inception
+  grafana:
+    image: "i-grafana:1.0.0"
+    build: ./requirements/bonus/grafana
+    env_file:
+      - .env
+    networks:
+      - inception  
+  redis:
+    image: "i-redis:1.0.0"
+    build: ./requirements/bonus/redis
+    env_file:
+      - .env
+    networks:
+      - inception
+  ftp-server:
+    image: "i-ftp:1.0.0"
+    build: ./requirements/bonus/ftp
+    volumes:
+      - "wordpress_data:/var/www/html/"
+    env_file:
+      - .env
+    ports:
+      - "21:21"
+      - "40000-40005:40000-40005"
+    networks:
+      - inception
+  static_website:
+      image: "i-static_website:1.0.0"
+      build: ./requirements/bonus/static_website/
+      networks:
+      - inception  

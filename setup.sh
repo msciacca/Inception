@@ -42,10 +42,6 @@ echo -e $PURPLE "Downloading and adding docker gpg..."
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 echo -e $GREEN "Done."
 
-echo -e $PURPLE "Adding the last stable repository..."
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-echo -e $GREEN "Done."
-
 echo -e $PURPLE "Installing docker..."
 sudo apt-get remove docker.io docker-doc docker-compose podman-docker containerd runc
 sudo apt-get update
